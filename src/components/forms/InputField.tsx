@@ -1,4 +1,5 @@
-import { h } from '../core/dom';
+/** @jsx h */
+import { h } from '../../core/dom';
 
 export const InputField = ({ 
   label, 
@@ -29,8 +30,4 @@ export const InputField = ({
       />
     </div>
   );
-};
-
-export const FormGroup = ({ children }: { children?: any }) => {
-  return <div className="form-group">{children}</div>;
 };

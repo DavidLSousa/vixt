@@ -1,16 +1,5 @@
-import { h } from '../core/dom';
-
-export const Container = ({ children, className = '' }: { children?: any; className?: string }) => {
-  return <div className={`vixt-container ${className}`.trim()}>{children}</div>;
-};
-
-export const Flex = ({ children, className = '' }: { children?: any; className?: string }) => {
-  return <div className={`flex ${className}`}>{children}</div>;
-};
-
-export const Grid = ({ children, className = '' }: { children?: any; className?: string }) => {
-  return <div className={`grid ${className}`}>{children}</div>;
-};
+/** @jsx h */
+import { h } from '../../core/dom';
 
 export const Section = ({ 
   children, 

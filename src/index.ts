@@ -4,11 +4,13 @@ export * from './core/events';
 export * from './utils/security';
 export * from './utils/validation';
 export * from './utils/http';
-export * from './components/primitives.tsx';
-export * from './components/layout.tsx';
-export * from './components/presentation.tsx';
-export * from './components/forms.tsx';
-export * from './components/icons.tsx';
+
+// Modular Components
+export * from './components/primitives';
+export * from './components/layout';
+export * from './components/presentation';
+export * from './components/forms';
+export * from './components/icons';
 
 import { VNode } from './core/dom';
 
