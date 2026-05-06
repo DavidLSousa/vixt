@@ -14,6 +14,7 @@ export * from './components/icons';
 export * from './components/feedback';
 export * from './components/navigation';
 export * from './components/overlays';
+export * from './components/data';
 
 import { VNode } from './core/dom';
 
