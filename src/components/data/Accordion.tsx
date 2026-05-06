@@ -1,5 +1,5 @@
 /** @jsx h */
-import { h, Fragment } from '../../core/dom';
+import { h } from '../../core/dom';
 
 export interface AccordionItemProps {
   id: string;

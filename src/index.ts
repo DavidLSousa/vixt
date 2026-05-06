@@ -1,3 +1,4 @@
+import './styles/components.css';
 export * from './core/store';
 export * from './core/dom';
 export * from './core/events';
