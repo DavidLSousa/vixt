@@ -319,3 +319,47 @@ html {
     gap: 2rem;
   }
 }
+/* --- BADGE --- */
+.vixt-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.vixt-badge--default {
+  background-color: var(--vixt-bg-alt, #f3f4f6);
+  color: var(--vixt-fg-muted, #4b5563);
+}
+
+.vixt-badge--primary {
+  background-color: var(--vixt-accent, #6366f1);
+  color: white;
+}
+
+.vixt-badge--success {
+  background-color: #10b981;
+  color: white;
+}
+
+.vixt-badge--warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.vixt-badge--error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.vixt-badge--outline {
+  background-color: transparent;
+  border-color: var(--vixt-border, #e5e7eb);
+  color: var(--vixt-fg, inherit);
+}

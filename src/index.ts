@@ -11,6 +11,7 @@ export * from './components/layout';
 export * from './components/presentation';
 export * from './components/forms';
 export * from './components/icons';
+export * from './components/feedback';
 
 import { VNode } from './core/dom';
 
