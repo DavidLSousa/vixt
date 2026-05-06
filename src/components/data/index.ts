@@ -1,2 +1,2 @@
-export * from './Accordion';
-export * from './SimpleTable';
+export * from "./Accordion";
+export * from "./SimpleTable";
