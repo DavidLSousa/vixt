@@ -13,6 +13,7 @@ export * from './components/forms';
 export * from './components/icons';
 export * from './components/feedback';
 export * from './components/navigation';
+export * from './components/overlays';
 
 import { VNode } from './core/dom';
 

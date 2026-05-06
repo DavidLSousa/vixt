@@ -17,7 +17,7 @@ export const Button = ({
   [key: string]: any;
 }) => {
   return (
-    <button type={type} className={`btn ${className}`} onClick={onClick} style={style} {...rest}>
+    <button type={type} className={`vixt-btn ${className}`} onClick={onClick} style={style} {...rest}>
       {children}
     </button>
   );

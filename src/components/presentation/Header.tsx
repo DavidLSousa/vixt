@@ -1,6 +1,19 @@
 /** @jsx h */
 import { h } from '../../core/dom';
 
+export interface HeaderProps {
+  brand: any;
+  links?: { text: string; href: string }[];
+  actions?: any;
+  children?: any;
+  fixed?: boolean;
+  transparent?: boolean;
+  isMobileMenuOpen?: boolean;
+  onMobileMenuToggle?: (open: boolean) => void;
+  className?: string;
+  [key: string]: any;
+}
+
 export const Header = ({ 
   brand, 
   links = [], 
@@ -8,23 +21,23 @@ export const Header = ({
   children,
   fixed = false, 
   transparent = false, 
+  isMobileMenuOpen = false,
+  onMobileMenuToggle,
   className = '',
   ...rest
-}: { 
-  brand: any; 
-  links?: { text: string; href: string }[]; 
-  actions?: any;
-  children?: any;
-  fixed?: boolean;
-  transparent?: boolean;
-  className?: string;
-  [key: string]: any;
-}) => {
-  const baseClass = `vixt-header ${fixed ? 'vixt-header--fixed' : ''} ${transparent ? 'vixt-header--transparent' : ''}`;
+}: HeaderProps) => {
+  const baseClass = `vixt-header ${fixed ? 'vixt-header--fixed' : ''} ${transparent ? 'vixt-header--transparent' : ''} ${isMobileMenuOpen ? 'vixt-header--mobile-open' : ''}`;
   
+  const handleToggle = () => {
+    if (onMobileMenuToggle) {
+      onMobileMenuToggle(!isMobileMenuOpen);
+    }
+  };
+
   const closeMenu = () => {
-    const checkbox = document.getElementById('vixt-mobile-menu-toggle') as HTMLInputElement;
-    if (checkbox) checkbox.checked = false;
+    if (onMobileMenuToggle) {
+      onMobileMenuToggle(false);
+    }
   };
   
   return (
@@ -37,17 +50,16 @@ export const Header = ({
         <div className="vixt-header__right vixt-flex vixt-flex--align-center">
           {actions && <div className="vixt-header__actions">{actions}</div>}
 
-          {/* Mobile First Checkbox Hack */}
-          <input type="checkbox" id="vixt-mobile-menu-toggle" className="vixt-header__toggle-input" />
-          
           {/* Overlay para fechar ao clicar fora */}
-          <label htmlFor="vixt-mobile-menu-toggle" className="vixt-header__overlay"></label>
+          {isMobileMenuOpen && (
+            <div className="vixt-header__overlay" onClick={closeMenu}></div>
+          )}
 
-          <label htmlFor="vixt-mobile-menu-toggle" className="vixt-header__toggle-label">
-            <span className="vixt-header__toggle-icon">☰</span>
-          </label>
+          <button type="button" className="vixt-header__toggle-btn" onClick={handleToggle}>
+            <span className="vixt-header__toggle-icon">{isMobileMenuOpen ? '✕' : '☰'}</span>
+          </button>
 
-          <nav className="vixt-header__nav" onClick={closeMenu}>
+          <nav className={`vixt-header__nav ${isMobileMenuOpen ? 'vixt-header__nav--open' : ''}`} onClick={closeMenu}>
             <ul className="vixt-header__nav-list">
               {links.map(link => (
                 <li className="vixt-header__nav-item">

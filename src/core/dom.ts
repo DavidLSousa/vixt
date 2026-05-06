@@ -18,7 +18,7 @@ export function h(
   };
 }
 
-export function Fragment({ children }: { children: any }) {
+export function Fragment({ children }: { children?: any; key?: string | number; [key: string]: any }) {
   return children;
 }
 
@@ -33,6 +33,15 @@ export function render(
 
   if (typeof vnode === "string" || typeof vnode === "number") {
     return document.createTextNode(String(vnode));
+  }
+
+  // Handle Arrays (Fragments)
+  if (Array.isArray(vnode)) {
+    const fragment = document.createDocumentFragment();
+    vnode.forEach((child) => {
+      fragment.appendChild(render(child, isSVG));
+    });
+    return fragment;
   }
 
   // At this point, TS might still be unsure, so we cast to VNode
@@ -60,9 +69,11 @@ export function render(
       element.setAttribute("class", String(value));
     } else if (name === "htmlFor") {
       element.setAttribute("for", String(value));
-    } else if (name.startsWith("on") && typeof value === "function") {
-      const eventName = name.toLowerCase().substring(2);
-      element.addEventListener(eventName, value as EventListener);
+    } else if (name.startsWith("on")) {
+      if (typeof value === "function") {
+        const eventName = name.toLowerCase().substring(2);
+        element.addEventListener(eventName, value as EventListener);
+      }
     } else {
       element.setAttribute(name, String(value));
     }
@@ -84,9 +95,16 @@ export function mountApp(
   if (!container) return;
 
   const update = () => {
+    // Preservar scroll para evitar o "pulo" no topo
+    const scrollX = window.scrollX || document.documentElement.scrollLeft;
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+
     container.innerHTML = "";
     const node = render(component());
     container.appendChild(node);
+
+    // Restaurar scroll instantaneamente
+    window.scrollTo(scrollX, scrollY);
   };
 
   if (store) {
