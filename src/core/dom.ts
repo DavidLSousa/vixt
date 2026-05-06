@@ -22,6 +22,10 @@ export function Fragment({ children }: { children?: any; key?: string | number; 
   return children;
 }
 
+// Blacklist de atributos perigosos e protocolos de URL
+const DANGEROUS_ATTRS = /^(on|formaction|poster|background|data|codebase)/i;
+const DANGEROUS_PROTOCOLS = /^(javascript|data|vbscript):/i;
+
 export function render(
   vnode: VNode | string | number | null | undefined | boolean,
   isSVG = false,
@@ -65,6 +69,12 @@ export function render(
   Object.entries(node.props || {}).forEach(([name, value]) => {
     if (name === "children") return;
 
+    // SECURITY: Block dangerous attributes (on*, formaction, etc) if they are strings
+    if (DANGEROUS_ATTRS.test(name) && typeof value !== 'function') {
+      console.warn(`[Vixt Security] Blocked dangerous attribute: ${name}`);
+      return;
+    }
+
     if (name === "className") {
       element.setAttribute("class", String(value));
     } else if (name === "htmlFor") {
@@ -75,7 +85,14 @@ export function render(
         element.addEventListener(eventName, value as EventListener);
       }
     } else {
-      element.setAttribute(name, String(value));
+      // SECURITY: Sanitize URLs in href, src, etc
+      const strValue = String(value);
+      if ((name === 'href' || name === 'src' || name === 'action') && DANGEROUS_PROTOCOLS.test(strValue)) {
+        console.warn(`[Vixt Security] Blocked dangerous URL protocol: ${strValue}`);
+        element.setAttribute(name, '#blocked');
+      } else {
+        element.setAttribute(name, strValue);
+      }
     }
   });
 

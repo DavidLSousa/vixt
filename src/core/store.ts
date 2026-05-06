@@ -14,6 +14,12 @@ export function createStore<T extends object>(initialState: T) {
 
   const handler: ProxyHandler<T> = {
     set(target, prop, value) {
+      // SECURITY: Block Prototype Pollution
+      if (prop === '__proto__' || prop === 'constructor' || prop === 'prototype') {
+        console.warn(`[Vixt Security] Blocked attempt to modify sensitive property: ${String(prop)}`);
+        return true;
+      }
+      
       if (Reflect.get(target, prop) === value) return true;
       const result = Reflect.set(target, prop, value);
       notify();
