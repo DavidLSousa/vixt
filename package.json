@@ -1,5 +1,5 @@
 {
-  "name": "@vixt/core",
+  "name": "@vixt-framework/core",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/vixt.umd.cjs",
