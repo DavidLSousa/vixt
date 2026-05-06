@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/vixt.umd.cjs",
-  "module": "./src/index.ts",
+  "module": "./dist/vixt.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./src/index.ts",
+      "import": "./dist/vixt.js",
       "require": "./dist/vixt.umd.cjs"
-    }
+    },
+    "./style.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",
