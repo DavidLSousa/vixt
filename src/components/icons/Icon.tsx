@@ -56,19 +56,33 @@ const ICON_MAP: Record<string, any> = {
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
     </svg>
+  ),
+  copy: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>
   )
 };
 
-export const Icon = ({ name, className = '' }: { name: string; className?: string }) => {
+export const Icon = ({ 
+  name, 
+  className = '', 
+  style = {} 
+}: { 
+  name: string; 
+  className?: string; 
+  style?: string | any;
+}) => {
   const icon = ICON_MAP[name.toLowerCase()];
   if (!icon) return null;
   
-  // Clone the icon VNode and inject className
+  // Clone the icon VNode and inject className and style
   return {
     ...icon,
     props: {
       ...icon.props,
-      className: `${icon.props.className || ''} ${className}`.trim()
+      className: `${icon.props.className || ''} ${className}`.trim(),
+      style: { ...icon.props.style, ...(typeof style === 'object' ? style : {}) }
     }
   };
 };
